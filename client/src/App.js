@@ -3,7 +3,8 @@ import Card from './Card';
 
 
 const App =()=>{
-  let [users,setUsers]=useState([]);
+  const [users,setUsers]=useState([])
+  let checker = users.length;
   useEffect(()=>{
    
     fetch("/users").then(
@@ -11,7 +12,7 @@ const App =()=>{
     ).then(
       data =>{setUsers(data)}
     )
-  },[])  
+  },[checker])  
 
   console.log(users)
   let disp =  users.map((user,index)=>{

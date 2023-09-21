@@ -66,9 +66,18 @@ let data = [
 
 ]
 app.post('/users',(req,res)=>{
-  let val = JSON.stringify(req.body)
-  console.log(val)
-  res.send("DATA RECEIVED")
+  const newData=[]
+  req.on('data',(chunk)=>{
+    console.log(chunk)
+    newData.push(chunk)
+  });
+  req.on('end',()=>{
+    const parsedData =Buffer.concat(newData).toString()
+    console.log(parsedData)
+    data=[...data,JSON.parse(parsedData)]
+    res.send(data)
+  });
+  
 })
 app.get('/users',(req,res)=>{
     res.json(data)
